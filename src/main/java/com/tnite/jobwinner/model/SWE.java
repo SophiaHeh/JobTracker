@@ -1,27 +1,33 @@
 package com.tnite.jobwinner.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class SWE extends Job {
+public class SWE extends GeneralJob{
+    private List<String> languages;
 
-  @Override
-  public List<Object> listAll() {
-    return List.of();
-  }
+    public SWE(String jobTitle, String description, String location, LocalDate applicationDate,
+        Company company, Person person, double salary, Status jobStatus, Type jobType){
+        super(jobTitle, description, location, applicationDate, company, person, salary, jobStatus, jobType);
+        this.languages = new ArrayList<>();
+    }
 
-  @Override
-  public void deleteApplications(String id) {
+    public void addLanguage(String language) {
+        if (language != null && !language.trim().isEmpty()) {
+            this.languages.add(language);
+        }
+    }
 
-  }
+    public List<String> getLanguages() {
+        return new ArrayList<>(languages);
+    }
 
-  @Override
-  public void inputApplication(Map<String, String> applicationMap) {
+    @Override
+    public String displayDetailedInfo() {
+        String baseInfo = super.displayDetailedInfo();
+        String languageInfo = languages.isEmpty() ? "" : " | Languages: " + String.join(", ", languages);
+        return baseInfo + languageInfo;
+    }
 
-  }
-
-  @Override
-  public void updateStatus(String id, String newStatus) {
-
-  }
 }
