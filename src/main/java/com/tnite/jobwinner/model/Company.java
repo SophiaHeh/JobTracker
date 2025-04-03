@@ -11,3 +11,5 @@ public class Company {
     this.website = website;
   }
 }
+
+//lacks the frequentCodingProblems field (previously a List<String> or MyQueue<String> in the class diagram)
