@@ -82,6 +82,23 @@
 <!--            <artifactId>spring-graphql-test</artifactId>-->
 <!--            <scope>test</scope>-->
 <!--        </dependency>-->
+
+
+      <!--mybatis-plus-->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        <version>3.5.11</version>
+      </dependency>
+
+      <!--mysql-->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.16</version>
+      </dependency>
+
+
     </dependencies>
 
     <build>

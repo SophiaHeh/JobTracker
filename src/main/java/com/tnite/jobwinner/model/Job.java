@@ -55,6 +55,7 @@ public abstract class Job{
     public Type getJobType() {return this.jobType;}
 
     public void setPerson(Person person) { this.person = person; }
+     // Change HR??
 
     public void setSalary(double salary) {
         if (salary <= 0) {
