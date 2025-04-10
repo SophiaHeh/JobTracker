@@ -32,7 +32,7 @@ public abstract class Job{
     }
 
     public Job(String jobTitle, Company company, LocalDate applicationDate) {
-        this(jobTitle,           // Required
+        this(jobTitle,         // Required
             "",                // description (optional, default: empty string)
             "Unknown",         // location (optional, default: "Unknown")
             applicationDate,   // Required
