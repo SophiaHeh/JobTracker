@@ -5,6 +5,6 @@ public enum Status {
     Applied,
     Interview_Scheduled,
     Offered,
-    Rejected,
-    Archived
+    Denied,
+    Ghosted
 }

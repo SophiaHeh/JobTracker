@@ -1,25 +1,52 @@
 package com.tnite.jobwinner.model;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import java.time.LocalDate;
-
 import java.util.UUID ;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "discriminator")
 public abstract class Job{
-    private UUID id;
+
+    @Id
+    private UUID id = UUID.randomUUID();
     private String jobTitle;
     private String description;
     private String location;
     private LocalDate applicationDate;
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "industry", column = @Column(name = "company_industry")),
+        @AttributeOverride(name = "name", column = @Column(name = "company_name")),
+        @AttributeOverride(name = "address", column = @Column(name = "company_address"))
+    })
     private Company company;
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "name", column = @Column(name = "person_name")),
+        @AttributeOverride(name = "email", column = @Column(name = "person_email"))
+    })
     private Person person;
     private double salary;
     private Status jobStatus;
     private Type jobType;
 
+    // test for API
+    public Job(){}
 
     public Job(String jobTitle, String description, String location, LocalDate applicationDate,
         Company company, Person person, double salary, Status jobStatus, Type jobType){
-        this.id = UUID.randomUUID();
         this.jobTitle = jobTitle;
         this.description = description;
         this.location = location;
@@ -51,7 +78,7 @@ public abstract class Job{
     public Company getCompany() {return this.company;}
     public Person getHRInfo(){return this.person;}
     public double getSalary() {return this.salary;}
-    public Status getJobStatus() {return this.jobStatus;}
+    public Status getStatus() {return this.jobStatus;}
     public Type getJobType() {return this.jobType;}
 
     public void setPerson(Person person) { this.person = person; }
@@ -63,7 +90,11 @@ public abstract class Job{
         }
         this.salary = salary;
     }
-    public void updateStatus(Status newStatus) {this.jobStatus = newStatus;}
+
+    public void setDescription(String s){
+        this.description = s;
+    }
+    public void setStatus(Status newStatus) {this.jobStatus = newStatus;}
 
 
     /**

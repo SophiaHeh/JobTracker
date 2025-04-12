@@ -1,9 +1,12 @@
 package com.tnite.jobwinner.model;
 
+import jakarta.persistence.Entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Entity
 public class SWE extends GeneralJob{
     private List<String> languages;
 

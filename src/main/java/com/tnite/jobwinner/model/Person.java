@@ -1,11 +1,21 @@
 package com.tnite.jobwinner.model;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+
+@Embeddable
 public class Person {
     private String firstName;
     private String lastName;
     private String email;
     private Company company;
     private int phoneNumber;
+
+    // test for API
+    public Person(){
+
+    }
+
 
     public Person(String firstName, String lastName, String email, Company company, int phoneNumber){
         this.firstName = firstName;
@@ -22,7 +32,7 @@ public class Person {
     }
 
     public static void main(String[] args){
-        Company c1 = new Company("Ark", "IT", "....url...");
+        Company c1 = new Company("Ark", "IT");
         Person p1 = new Person("Mary", "Smith", "ms@ark.mail.com", c1, 123456789);
         String s = p1.toString();
         System.out.println(s);

@@ -1,14 +1,21 @@
 package com.tnite.jobwinner.model;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Company {
     private String name;
     private String industry;
-    private String website;
 
-    public Company(String name, String industry, String website) {
+
+    // test for API
+    public Company() {
+        // Required for Jackson
+    }
+
+    public Company(String name, String industry) {
         this.name = name;
         this.industry = industry;
-        this.website = website;
     }
 
     public String getName(){return this.name;}
@@ -21,11 +28,12 @@ public class Company {
     }
 
     public static void main(String[] args){
-        Company c1 = new Company("Ark", "IT", "....url...");
+        Company c1 = new Company("Ark", "IT");
         String res = c1.toString();
         System.out.println(res);
     }
 
 }
+
 
 //lacks the frequentCodingProblems field (previously a List<String> or MyQueue<String> in the class diagram)

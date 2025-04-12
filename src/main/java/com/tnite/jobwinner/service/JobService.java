@@ -9,6 +9,8 @@
 //}
 
 package com.tnite.jobwinner.service;
+import com.tnite.jobwinner.model.GeneralJob;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 import com.tnite.jobwinner.model.Job;
 import java.util.List;
@@ -16,16 +18,16 @@ import java.util.List;
 public interface JobService {
 
   // Create
-  boolean createJob(Job job);
+  boolean createJob(GeneralJob job);
 
   // Read
-  Job getJobById(String id);
+  Job getJobById(UUID id);
 
-  List<Job> listAllJobs();
+  List<GeneralJob> listAllJobs();
 
   // Update
-  boolean updateJob(Job updatedJob); // no id needed, already in Job
+  boolean updateJob(UUID id, GeneralJob updatedJob); // no id needed, already in Job
 
   // Delete
-  boolean deleteJob(String id);
+  boolean deleteJob(UUID id);
 }
