@@ -49,7 +49,8 @@ public class JobController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/jobs")
+    // list all jobs
+    @GetMapping
     public ResponseEntity<List<GeneralJob>> getAllJobs() {
         List<GeneralJob> jobs = jobService.listAllJobs();
         return ResponseEntity.ok(jobs);
