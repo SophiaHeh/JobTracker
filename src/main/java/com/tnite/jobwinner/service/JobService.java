@@ -18,10 +18,10 @@ import java.util.List;
 public interface JobService {
 
   // Create
-  boolean createJob(GeneralJob job);
+  GeneralJob createJob(GeneralJob job);
 
   // Read
-  Job getJobById(UUID id);
+  GeneralJob getJobById(UUID id);
 
   List<GeneralJob> listAllJobs();
 

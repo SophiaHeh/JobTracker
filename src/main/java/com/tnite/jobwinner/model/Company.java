@@ -19,12 +19,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class Company {
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-        name = "UUID",
-        strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "company_id", updatable = false, nullable = false)
-    private UUID companyId = UUID.randomUUID();
+    private UUID companyId;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;

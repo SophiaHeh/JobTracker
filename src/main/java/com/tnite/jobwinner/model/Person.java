@@ -1,21 +1,28 @@
 package com.tnite.jobwinner.model;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import java.util.UUID;
 
 @Entity
 public class Person {
     @Id
+    @GeneratedValue
     private UUID personID = UUID.randomUUID();;
     private String firstName;
     private String lastName;
     private String email;
+
+    // not persisted
+    @Transient
+    @JsonProperty("companyName")
+    private String companyName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
@@ -66,6 +73,20 @@ public class Person {
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;
+    }
+
+    public Company getCompany() {
+        return this.company;
+    }
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getEmail() {

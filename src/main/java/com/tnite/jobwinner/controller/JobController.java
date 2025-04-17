@@ -32,15 +32,21 @@ public class JobController {
         this.jobService = jobService;
     }
 
-
     @PostMapping
-    public ResponseEntity<String> createJob(@RequestBody GeneralJob job) {
-        boolean created = jobService.createJob(job);
-        if (created) {
-            return ResponseEntity.ok("Job created successfully");
-        }
-        return ResponseEntity.badRequest().body("Failed to create job");
+    public ResponseEntity<GeneralJob> createJob(@RequestBody GeneralJob job) {
+        GeneralJob saved = jobService.createJob(job);
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(saved);
     }
+
+//    public ResponseEntity<String> createJob(@RequestBody GeneralJob job) {
+//        boolean created = jobService.createJob(job);
+//        if (created) {
+//            return ResponseEntity.ok("Job created successfully");
+//        }
+//        return ResponseEntity.badRequest().body("Failed to create job");
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Job> getJobById(@PathVariable UUID id) {

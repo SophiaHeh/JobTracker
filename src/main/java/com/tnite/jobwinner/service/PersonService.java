@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PersonService {
-    boolean save(Person person);
+    Person save(Person person);
 
     boolean removeById(UUID id);
 

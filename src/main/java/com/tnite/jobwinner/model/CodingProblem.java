@@ -24,7 +24,8 @@ public class CodingProblem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", nullable = false)
-    private GeneralJob job; // The ID that associated Job
+    private SWE job;
+
 
     @Column(name = "question", nullable = false, length = 2000)
     private String question;
@@ -38,7 +39,7 @@ public class CodingProblem {
     public CodingProblem() {
     }
 
-    public CodingProblem(GeneralJob job, String question, String platform,
+    public CodingProblem(SWE job, String question, String platform,
         String difficulty) {
         this.job = job;
         this.question = question;
@@ -58,7 +59,7 @@ public class CodingProblem {
         return this.job;
     }
 
-    public void setJob(GeneralJob job) {
+    public void setJob(SWE job) {
         this.job = job;
     }
 

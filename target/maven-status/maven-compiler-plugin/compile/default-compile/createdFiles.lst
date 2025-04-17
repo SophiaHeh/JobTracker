@@ -1,5 +1,6 @@
 com/tnite/jobwinner/service/PersonService.class
 com/tnite/jobwinner/service/CodingProblemService.class
+com/tnite/jobwinner/service/impl/ResourceNotFoundException.class
 com/tnite/jobwinner/repository/JobRepository.class
 com/tnite/jobwinner/repository/CodingProblemRepository.class
 com/tnite/jobwinner/JobTrackerApplication.class

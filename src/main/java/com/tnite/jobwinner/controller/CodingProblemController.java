@@ -4,6 +4,8 @@ import com.tnite.jobwinner.model.CodingProblem;
 import com.tnite.jobwinner.service.CodingProblemService;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +19,9 @@ public class CodingProblemController {
     private CodingProblemService codingProblemService;
 
     @PostMapping("/create")
-    public boolean createCodingProblem(@RequestBody CodingProblem codingProblem) {
-        return codingProblemService.save(codingProblem);
+    public ResponseEntity<CodingProblem> createCodingProblem(@RequestBody CodingProblem codingProblem) {
+        CodingProblem savedProblem = codingProblemService.save(codingProblem);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedProblem);
     }
 
     @GetMapping("/delete/{id}")

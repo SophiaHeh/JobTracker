@@ -26,5 +26,6 @@
 /Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/service/impl/CodingProblemServiceImpl.java
 /Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/service/impl/JobServiceImpl.java
 /Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/service/impl/PersonServiceImpl.java
+/Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/service/impl/ResourceNotFoundException.java
 /Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/service/impl/SWEServiceImpl.java
 /Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/utils/UUIDUtil.java

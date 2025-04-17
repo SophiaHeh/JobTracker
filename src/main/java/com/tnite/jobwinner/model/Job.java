@@ -2,6 +2,7 @@ package com.tnite.jobwinner.model;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Embedded;
@@ -44,7 +45,7 @@ public abstract class Job{
     @Column(name = "application_date", nullable = false)
     private LocalDate applicationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
@@ -107,6 +108,7 @@ public abstract class Job{
 
     public void setPerson(Person person) { this.person = person; }
 
+    public void setCompany(Company company) { this.company = company; }
 
     public void setSalary(double salary) {
         if (salary <= 0) {
@@ -155,3 +157,4 @@ public abstract class Job{
 //    public abstract String displayDetailedInfo();
 
 }
+
