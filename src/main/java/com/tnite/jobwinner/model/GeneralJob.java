@@ -1,5 +1,6 @@
 package com.tnite.jobwinner.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -10,53 +11,32 @@ import java.time.LocalDate;
 
 @Entity
 public class GeneralJob extends Job {
-    private List<String> notes;
+
+    @Column(name = "interview_date")
     private LocalDate interviewDate;
 
     /**
-     * Constructors
+     * No-args constructor for JPA and JSON deserialization
      */
-
-
-    // test for API
     public GeneralJob() {
-        // No-arg constructor for JSON deserialization
+        super();
     }
-
 
     public GeneralJob(String jobTitle, String description, String location, LocalDate applicationDate,
         Company company, Person person, double salary, Status jobStatus, Type jobType){
         super(jobTitle, description, location, applicationDate, company, person, salary, jobStatus, jobType);
-        this.notes = new ArrayList<>();
         this.interviewDate = null;
     }
 
     public GeneralJob(String jobTitle, Company company, LocalDate applicationDate) {
         super(jobTitle, company, applicationDate); // Calls Job's required-fields constructor
-        this.notes = new ArrayList<>();
         this.interviewDate = null;
     }
-
-
-    public void addNote(String note) {
-        if (note != null && !note.trim().isEmpty()) { // Prevent null or empty notes
-            notes.add(note);
-        }
-    }
-
-    public List<String> getNotes() {
-        return notes;
-    }
-
-    public void resumeVersion(String resumeVersion) {
-        addNote("Resume version: " + resumeVersion);
-    }
-
 
     public void setInterviewDate(LocalDate interviewDate) {
         this.interviewDate = interviewDate;
         if (interviewDate != null) {
-            setStatus(Status.Interview_Scheduled);
+            setJobStatus(Status.Interview_Scheduled);
         }
     }
 
@@ -69,20 +49,21 @@ public class GeneralJob extends Job {
      */
     public void checkAndMarkGhosted() {
         long daysSinceApplication = ChronoUnit.DAYS.between(this.getApplicationDate(), LocalDate.now());
-        if (daysSinceApplication >= 30 && getStatus() != Status.Ghosted) {
-            setStatus(Status.Ghosted);
+        if (daysSinceApplication >= 30 && getJobStatus() != Status.Ghosted) {
+            setJobStatus(Status.Ghosted);
         }
     }
 
-    @Override
-    public String displayDetailedInfo() {
-        String info = this.toString();
-        if (interviewDate != null) {
-            info += String.format(" | Interview Date: %s", interviewDate);
-        }
-        if (!notes.isEmpty()) {
-            info += " | Notes: " + String.join(", ", notes);
-        }
-        return info;
-    }
+//
+//    @Override
+//    public String displayDetailedInfo() {
+//        String info = this.toString();
+//        if (interviewDate != null) {
+//            info += String.format(" | Interview Date: %s", interviewDate);
+//        }
+//        if (!notes.isEmpty()) {
+//            info += " | Notes: " + String.join(", ", notes);
+//        }
+//        return info;
+//    }
 }

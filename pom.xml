@@ -88,6 +88,7 @@
     </dependency>
   </dependencies>
 
+
   <build>
     <plugins>
       <!-- Spring Boot Maven Plugin to package the application -->

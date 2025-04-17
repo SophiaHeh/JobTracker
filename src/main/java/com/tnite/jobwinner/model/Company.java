@@ -1,10 +1,35 @@
 package com.tnite.jobwinner.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import java.util.Objects;
+import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
-@Embeddable
+@Entity
+@Table(
+    name = "companies",
+    uniqueConstraints = @UniqueConstraint(columnNames = "name")
+)
 public class Company {
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "company_id", updatable = false, nullable = false)
+    private UUID companyId = UUID.randomUUID();
+
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
+
+    @Column(name = "industry", nullable = false, length = 100)
     private String industry;
 
 
@@ -18,13 +43,29 @@ public class Company {
         this.industry = industry;
     }
 
+    public UUID getCompanyId() {
+        return companyId;
+    }
+
     public String getName(){return this.name;}
+
+    public void setName(String name){this.name = name;}
 
     public String getIndustry(){return this.industry;}
 
+    @Override
     public String toString(){
-        String s = "Company: " + getName() + "\n" + "Industry: " + getIndustry();
+        String s = "ID: " + getCompanyId() + "Company: " + getName() + "\n" + "Industry: " + getIndustry();
         return s;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Company that = (Company) o;
+        return Objects.equals(companyId, that.companyId);
     }
 
     public static void main(String[] args){

@@ -6,44 +6,67 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.UUID ;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name = "jobs")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discriminator")
 public abstract class Job{
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id = UUID.randomUUID();
+
+    @Column(name = "job_title", nullable = false, length = 200)
     private String jobTitle;
+
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "location", nullable = false, length = 100)
     private String location;
+
+    @Column(name = "application_date", nullable = false)
     private LocalDate applicationDate;
 
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "industry", column = @Column(name = "company_industry")),
-        @AttributeOverride(name = "name", column = @Column(name = "company_name")),
-        @AttributeOverride(name = "address", column = @Column(name = "company_address"))
-    })
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "name", column = @Column(name = "person_name")),
-        @AttributeOverride(name = "email", column = @Column(name = "person_email"))
-    })
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
     private Person person;
+
+    @Column(name = "salary")
     private double salary;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "job_status", nullable = false, length = 50)
     private Status jobStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "job_type", nullable = false, length = 50)
     private Type jobType;
 
-    // test for API
-    public Job(){}
+    /**
+     * No-args constructor for JPA
+     */
+    protected Job(){}
 
     public Job(String jobTitle, String description, String location, LocalDate applicationDate,
         Company company, Person person, double salary, Status jobStatus, Type jobType){
@@ -78,11 +101,12 @@ public abstract class Job{
     public Company getCompany() {return this.company;}
     public Person getHRInfo(){return this.person;}
     public double getSalary() {return this.salary;}
-    public Status getStatus() {return this.jobStatus;}
+    public Status getJobStatus() {return this.jobStatus;}
     public Type getJobType() {return this.jobType;}
 
+
     public void setPerson(Person person) { this.person = person; }
-     // Change HR??
+
 
     public void setSalary(double salary) {
         if (salary <= 0) {
@@ -91,10 +115,14 @@ public abstract class Job{
         this.salary = salary;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public void setDescription(String s){
         this.description = s;
     }
-    public void setStatus(Status newStatus) {this.jobStatus = newStatus;}
+    public void setJobStatus(Status newStatus) {this.jobStatus = newStatus;}
 
 
     /**
@@ -107,10 +135,23 @@ public abstract class Job{
             applicationDate != null;
     }
 
-    public String toString(){
-        return String.format("Job: %s at %s, Status: %s", jobTitle, company.getName(), jobStatus);
+
+    @Override
+    public String toString() {
+        return "Job{" +
+            "id='" + id + '\'' +
+            ", jobTitle='" + jobTitle + '\'' +
+            ", description='" + description + '\'' +
+            ", location='" + location + '\'' +
+            ", applicationDate='" + applicationDate + '\'' +
+            ", company='" + company + '\'' +
+            ", person='" + person + '\'' +
+            ", salary=" + salary +
+            ", jobStatus=" + jobStatus +
+            ", jobType=" + jobType +
+            '}';
     }
 
-    public abstract String displayDetailedInfo();
+//    public abstract String displayDetailedInfo();
 
 }
