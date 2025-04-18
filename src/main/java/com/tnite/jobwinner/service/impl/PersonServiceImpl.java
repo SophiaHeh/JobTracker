@@ -6,12 +6,10 @@ import com.tnite.jobwinner.model.Person;
 import com.tnite.jobwinner.repository.CompanyRepository;
 import com.tnite.jobwinner.service.PersonService;
 import com.tnite.jobwinner.repository.PersonRepository;
-import com.tnite.jobwinner.utils.UUIDUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -31,12 +29,8 @@ public class PersonServiceImpl implements PersonService {
         try {
             // Extract company name
             String companyName = person.getCompany() != null ?
-                person.getCompanyName() :
+                person.getCompany().getName() :
                 null;
-
-//            if (companyName == null) {
-//                return false; // Company name is required
-//            }
 
             // Find or create the company
             Company company = companyRepository.findByName(companyName)
@@ -59,16 +53,16 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public List<Person> list() {
+        return personRepository.findAll();
+    }
+
+    @Override
     public boolean removeById(UUID id) {
         if (personRepository.existsById(id)) {
             personRepository.deleteById(id);
             return true;
         }
         return false;
-    }
-
-    @Override
-    public List<Person> list() {
-        return personRepository.findAll();
     }
 }

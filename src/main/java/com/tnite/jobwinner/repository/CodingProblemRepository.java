@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CodingProblemRepository extends JpaRepository<CodingProblem, UUID> {
-    List<CodingProblem> findByJobId(SWE jobId);
-    List<SWE> findByJobJobTitleAndJobCompanyName(String jobTitle, String companyName);
+    List<CodingProblem> findByJobId(UUID jobId);
+//    List<SWE> findByJobJobTitleAndJobCompanyName(String jobTitle, String companyName);
 
 }

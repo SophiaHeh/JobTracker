@@ -1,0 +1,99 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.tnite:job-tracker >------------------------
+[INFO] Building job-tracker 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.10:run (default-cli) > test-compile @ job-tracker >>>
+[WARNING] The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ job-tracker ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ job-tracker ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 32 source files with javac [debug parameters release 17] to target/classes
+[INFO] /Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/model/CodingProblem.java: Some input files use or override a deprecated API.
+[INFO] /Users/tzuying/Desktop/JobTracker/src/main/java/com/tnite/jobwinner/model/CodingProblem.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ job-tracker ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ job-tracker ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] 
+[INFO] <<< spring-boot:3.3.10:run (default-cli) < test-compile @ job-tracker <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.10:run (default-cli) @ job-tracker ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.3.10)
+
+2025-04-17T21:21:39.333-07:00  INFO 70635 --- [  restartedMain] c.tnite.jobwinner.JobTrackerApplication  : Starting JobTrackerApplication using Java 23.0.2 with PID 70635 (/Users/tzuying/Desktop/JobTracker/target/classes started by tzuying in /Users/tzuying/Desktop/JobTracker)
+2025-04-17T21:21:39.334-07:00  INFO 70635 --- [  restartedMain] c.tnite.jobwinner.JobTrackerApplication  : No active profile set, falling back to 1 default profile: "default"
+2025-04-17T21:21:39.352-07:00  INFO 70635 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-17T21:21:39.352-07:00  INFO 70635 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-17T21:21:39.546-07:00  INFO 70635 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-17T21:21:39.562-07:00  INFO 70635 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 5 JPA repository interfaces.
+2025-04-17T21:21:39.597-07:00  WARN 70635 --- [  restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.tnite.jobwinner]' package. Please check your configuration.
+2025-04-17T21:21:39.709-07:00  INFO 70635 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-04-17T21:21:39.714-07:00  INFO 70635 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-17T21:21:39.714-07:00  INFO 70635 --- [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-04-17T21:21:39.725-07:00  INFO 70635 --- [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-04-17T21:21:39.725-07:00  INFO 70635 --- [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 372 ms
+2025-04-17T21:21:39.772-07:00  INFO 70635 --- [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-17T21:21:39.789-07:00  INFO 70635 --- [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-04-17T21:21:39.796-07:00  INFO 70635 --- [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-04-17T21:21:39.877-07:00  INFO 70635 --- [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-17T21:21:39.885-07:00  INFO 70635 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-04-17T21:21:40.043-07:00  INFO 70635 --- [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5b20e75a
+2025-04-17T21:21:40.044-07:00  INFO 70635 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-04-17T21:21:40.063-07:00  WARN 70635 --- [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-17T21:21:40.409-07:00  INFO 70635 --- [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: alter table jobs modify column description TEXT
+Hibernate: alter table jobs modify column job_status enum ('Applied','Denied','Ghosted','Interview_Scheduled','Offered','Pending') not null
+Hibernate: alter table jobs modify column job_type enum ('CONTRACT','FULL_TIME','INTERN','REMOTE') not null
+2025-04-17T21:21:40.482-07:00  INFO 70635 --- [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-17T21:21:40.657-07:00  WARN 70635 --- [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.11 
+2025-04-17T21:21:40.792-07:00  WARN 70635 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2025-04-17T21:21:40.799-07:00  WARN 70635 --- [  restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-04-17T21:21:40.799-07:00  INFO 70635 --- [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-17T21:21:40.801-07:00  INFO 70635 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-04-17T21:21:40.803-07:00  INFO 70635 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-04-17T21:21:40.807-07:00  INFO 70635 --- [  restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-17T21:21:40.812-07:00 ERROR 70635 --- [  restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.679 s
+[INFO] Finished at: 2025-04-17T21:21:40-07:00
+[INFO] ------------------------------------------------------------------------

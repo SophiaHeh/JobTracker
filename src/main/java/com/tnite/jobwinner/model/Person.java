@@ -21,10 +21,10 @@ public class Person {
     private String lastName;
     private String email;
 
-    // not persisted
-    @Transient
-    @JsonProperty("companyName")
-    private String companyName;
+
+//    @Transient
+//    @JsonProperty("companyName")
+//    private String companyName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
@@ -77,19 +77,28 @@ public class Person {
         return this.firstName + " " + this.lastName;
     }
 
+    // Get Company object
     public Company getCompany() {
         return this.company;
     }
+
     public void setCompany(Company company) {
         this.company = company;
     }
 
-    public String getCompanyName() {
-        return companyName;
-    }
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+//    public Company getCompanyId() {
+//        return company;
+//    }
+
+
+//    // Get Company's name
+//    public String getCompanyName() {
+//        return companyName;
+//    }
+//
+//    public void setCompanyName(String companyName) {
+//        this.companyName = companyName;
+//    }
 
     public String getEmail() {
         return this.email;
@@ -107,9 +116,6 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public Company getCompanyId() {
-        return company;
-    }
 
 
     @Override
@@ -122,12 +128,5 @@ public class Person {
             ", company='" + company + '\'' +
             ", phoneNumber='" + phoneNumber + '\'' +
             '}';
-    }
-
-    public static void main(String[] args){
-        Company c1 = new Company("Ark", "IT");
-        Person p1 = new Person("Mary", "Smith", "ms@ark.mail.com", c1, "123456789");
-        String s = p1.toString();
-        System.out.println(s);
     }
 }

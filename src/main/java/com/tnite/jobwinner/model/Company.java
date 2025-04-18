@@ -1,7 +1,7 @@
 package com.tnite.jobwinner.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -76,6 +76,3 @@ public class Company {
     }
 
 }
-
-
-//lacks the frequentCodingProblems field (previously a List<String> or MyQueue<String> in the class diagram)

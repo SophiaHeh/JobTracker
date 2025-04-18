@@ -18,12 +18,18 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDate;
 import java.util.UUID ;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "jobs")
+@Table(
+    name = "jobs",
+    uniqueConstraints = @UniqueConstraint(
+        columnNames = {"job_title", "company_id"}      // business key
+    )
+)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discriminator")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -33,7 +39,7 @@ public abstract class Job{
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @Column(name = "job_title", nullable = false, length = 200)
     private String jobTitle;
@@ -107,6 +113,7 @@ public abstract class Job{
     public Status getJobStatus() {return this.jobStatus;}
     public Type getJobType() {return this.jobType;}
 
+    public void setJobTitle(String title) { this.jobTitle = title; }
 
     public void setPerson(Person person) { this.person = person; }
 
@@ -155,8 +162,6 @@ public abstract class Job{
             ", jobType=" + jobType +
             '}';
     }
-
-//    public abstract String displayDetailedInfo();
 
 }
 

@@ -1,5 +1,6 @@
 package com.tnite.jobwinner.service.impl;
 
+
 import com.tnite.jobwinner.model.*;
 import com.tnite.jobwinner.repository.SWERepository;
 import com.tnite.jobwinner.repository.CompanyRepository;
@@ -7,17 +8,19 @@ import com.tnite.jobwinner.repository.PersonRepository;
 import com.tnite.jobwinner.repository.CodingProblemRepository;
 import com.tnite.jobwinner.service.SWEService;
 import jakarta.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Service
 public class SWEServiceImpl implements SWEService {
+    private static final Logger logger = LoggerFactory.getLogger(SWEServiceImpl.class);
 
     @Autowired
     private final SWERepository sweRepository;
@@ -34,94 +37,60 @@ public class SWEServiceImpl implements SWEService {
         this.codingProblemRepository = codingProblemRepository;
     }
 
-//    @Override
-//    @Transactional
-//    public SWE save(SWE swe) {
-//        if (swe.getSalary() <= 0.0) {
-//            throw new IllegalArgumentException("Salary should be greater than 0.");
-//        }
-//
-//        // Find existing company or create new one
-//        if (swe.getCompany() == null) {
-//            throw new IllegalArgumentException("Company should not be null.");
-//        }
-//
-//        Company company = companyRepository
-//            .findByName(swe.getCompany().getName())
-//            .orElseGet(() -> companyRepository.save(
-//                new Company(swe.getCompany().getName(),
-//                    swe.getCompany().getIndustry())));
-//        swe.setCompany(company);
-//
-//        // Handle person if present
-//        if (swe.getPerson() != null) {
-//            Person person = personRepository
-//                .findByEmail(swe.getPerson().getEmail())
-//                .orElseGet(() -> {
-//                    swe.getPerson().setCompany(company);
-//                    return personRepository.save(swe.getPerson());
-//                });
-//            swe.setPerson(person);
-//        }
-//
-//        // --- Coding problems: just link, let cascade persist -------------------
-//        if (swe.getCodingProblems() != null) {
-//            for (CodingProblem cp : swe.getCodingProblems()) {
-//                cp.setJob(swe);
-//            }
-//        }
-//
-//        return sweRepository.save(swe); // Persist to database
-//    }
-
     @Override
+    @Transactional
     public SWE save(SWE swe) {
-        // Check for duplicate SWE by jobTitle and company
-        if (swe.getJobTitle() != null && swe.getCompany() != null) {
-            List<SWE> existingJobs = sweRepository.findByJobTitleAndCompany_Name(
-                swe.getJobTitle(), swe.getCompany().getName());
-            if (!existingJobs.isEmpty()) {
-                throw new IllegalArgumentException("SWE job with title '" + swe.getJobTitle() +
-                    "' for company '" + swe.getCompany().getName() + "' already exists.");
-            }
+        /* -------- A) Basic validation -------- */
+        if (swe.getCompany() == null) {
+            throw new IllegalArgumentException("Company must not be null.");
         }
         if (swe.getSalary() <= 0.0) {
             throw new IllegalArgumentException("Salary should be greater than 0.");
         }
-        if (swe.getCompany() == null) {
-            throw new IllegalArgumentException("Company should not be null.");
+
+        /* -------- B) Canonicalise -------- */
+        String canonicalJob     = swe.getJobTitle().trim().toLowerCase();
+        String canonicalCompany = swe.getCompany().getName().trim().toLowerCase();
+
+        swe.setJobTitle(canonicalJob);                  // <-- write back
+        swe.getCompany().setName(canonicalCompany);     // <-- write back
+
+        /* -------- C) Duplicate check -------- */
+        if (sweRepository.existsByJobTitleIgnoreCaseAndCompany_NameIgnoreCase(
+            canonicalJob, canonicalCompany)) {
+            throw new IllegalArgumentException(
+                "Job '" + canonicalJob + "' at '" + canonicalCompany + "' already exists");
         }
 
-
-        // Deduplicate and normalize company
-        String companyName = swe.getCompany().getName().trim().toLowerCase();
+        /* -------- D) Re‑use or create Company -------- */
         Company company = companyRepository
-            .findByNameIgnoreCase(companyName)
-            .orElseGet(() -> companyRepository.save(new Company(
-                swe.getCompany().getName().trim(),
-                swe.getCompany().getIndustry()
-            )));
+            .findByNameIgnoreCase(canonicalCompany)
+            .orElseGet(() -> companyRepository.save(
+                new Company(canonicalCompany, swe.getCompany().getIndustry())));
         swe.setCompany(company);
 
+        /* -------- E) Person (optional) -------- */
         if (swe.getPerson() != null) {
-            // Normalize email
             String email = swe.getPerson().getEmail().trim().toLowerCase();
             swe.getPerson().setEmail(email);
             swe.getPerson().setCompany(company);
 
-            Person person = personRepository.findByEmailIgnoreCase(email)
+            Person person = personRepository
+                .findByEmailIgnoreCase(email)
                 .orElseGet(() -> personRepository.save(swe.getPerson()));
             swe.setPerson(person);
         }
 
+        /* -------- F) Link coding problems -------- */
         if (swe.getCodingProblems() != null) {
-            for (CodingProblem cp : swe.getCodingProblems()) {
-                cp.setJob(swe);
-            }
+            swe.getCodingProblems().forEach(cp -> cp.setJob(swe));
         }
-        return sweRepository.save(swe);
-    }
 
+        /* -------- G) Save once -------- */
+        SWE saved = sweRepository.save(swe);
+        logger.info("Saved SWE with ID: {}", saved.getId());
+        return saved;
+    }
 
     @Override
     public List<SWE> listAll() {
@@ -162,7 +131,7 @@ public class SWEServiceImpl implements SWEService {
             person.ifPresent(filteredJob::setPerson);
 
             // Assuming CodingProblem has a jobId field linking to SWE
-            List<CodingProblem> codingProblems = codingProblemRepository.findByJobId(filteredJob);
+            List<CodingProblem> codingProblems = codingProblemRepository.findByJobId(filteredJob.getId());
             filteredJob.setCodingProblems(codingProblems);
         }
 

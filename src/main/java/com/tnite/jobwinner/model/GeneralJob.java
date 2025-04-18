@@ -2,11 +2,7 @@ package com.tnite.jobwinner.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 import java.time.LocalDate;
 
 @Entity
@@ -53,17 +49,4 @@ public class GeneralJob extends Job {
             setJobStatus(Status.Ghosted);
         }
     }
-
-//
-//    @Override
-//    public String displayDetailedInfo() {
-//        String info = this.toString();
-//        if (interviewDate != null) {
-//            info += String.format(" | Interview Date: %s", interviewDate);
-//        }
-//        if (!notes.isEmpty()) {
-//            info += " | Notes: " + String.join(", ", notes);
-//        }
-//        return info;
-//    }
 }

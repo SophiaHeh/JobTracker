@@ -80,7 +80,7 @@
       <optional>true</optional>
     </dependency>
 
-    <!-- Spring Boot Starter Test for testing -->
+    <!-- Spring Boot Starter Test for testsing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

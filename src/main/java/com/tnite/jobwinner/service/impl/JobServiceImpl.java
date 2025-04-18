@@ -21,12 +21,6 @@ public class JobServiceImpl implements JobService {
   @Autowired
   private CompanyRepository companyRepo;
 
-//  @Override
-//  public boolean createJob(GeneralJob job) {
-//    // Add business logic and validations if needed
-//    jobRepository.save(job);
-//    return true;
-//  }
 
   @Override
   @Transactional
@@ -57,52 +51,21 @@ public class JobServiceImpl implements JobService {
 
     // 4) Now save the Job; no cascade needed for Company
     GeneralJob saved = jobRepository.save(job);
+    System.out.println("🔧 Saved job class: " + saved.getClass().getSimpleName());
+
     return saved;
-  }
-
-
-
-
-//  public boolean createJob(GeneralJob job) {
-//    try {
-//      // Extract company name
-//      String companyName = job.getCompany() != null ?
-//          job.getCompany().getName() :
-//          null;
-//
-//      if (companyName == null) {
-//        return false; // Company name is required
-//      }
-//
-//      // Find or create the company
-//      Company company = companyRepo.findByName(companyName)
-//          .orElseGet(() -> {
-//            Company newCompany = new Company();
-//            newCompany.setName(companyName);
-//            return companyRepo.save(newCompany);
-//          });
-//
-//      // Set the actual company entity on the job
-//      job.setCompany(company);
-//
-//      // Save the job
-//      jobRepository.save(job);
-//      return true;
-//    } catch (Exception e) {
-//      // Log the exception
-//      e.printStackTrace();
-//      return false;
-//    }
-//  }
-
-  @Override
-  public GeneralJob getJobById(UUID id) {
-    return jobRepository.findById(id).orElse(null);
   }
 
   @Override
   public List<GeneralJob> listAllJobs() {
-    return jobRepository.findAll();
+    List<GeneralJob> jobs = jobRepository.findAll();
+
+    return jobs;
+  }
+
+  @Override
+  public GeneralJob getJobById(UUID id) {
+    return jobRepository.findById(id).orElse(null);
   }
 
   @Override
@@ -118,7 +81,6 @@ public class JobServiceImpl implements JobService {
     }
     return false;
   }
-
 
   @Override
   public boolean deleteJob(UUID id) {

@@ -10,41 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@RestController
-//@RequestMapping("/swe")
-//public class SWEController {
-//
-//    @Autowired
-//    private SWEService sweService;
-//
-//    @PostMapping("/create")
-//    public SWE createSWE(@RequestBody SWE swe) {
-//        return sweService.save(swe);
-//    }
-//
-//    @GetMapping("/delete/{id}")
-//    public boolean deleteSWE(@PathVariable UUID id) {
-//        return sweService.removeById(id);
-//    }
-//
-//    @PostMapping("/update")
-//    public boolean updateSWE(@RequestBody SWE swe) {
-//        return sweService.updateById(swe);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public SWE getSWEById(@PathVariable UUID id) {
-//        return sweService.getById(id);
-//    }
-//
-//    @PostMapping("/list")
-//    public List<SWE> listSWEs(@RequestBody SWE swe) {
-//        return sweService.list(swe);
-//    }
-//}
-
-
-
 
 @RestController
 @RequestMapping("/swe")
@@ -55,6 +20,7 @@ public class SWEController {
 
     @PostMapping("/create")
     public ResponseEntity<SWE> createSWE(@RequestBody SWE swe) {
+
         // Set job reference for each CodingProblem to avoid null job_id
         if (swe.getCodingProblems() != null) {
             for (CodingProblem problem : swe.getCodingProblems()) {
