@@ -18,15 +18,16 @@ import java.util.List;
 @DiscriminatorValue("SWE")
 public class SWE extends GeneralJob{
 
-    @OneToMany(
-        mappedBy = "job",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private List<CodingProblem> codingProblems = new ArrayList<>();// : One-to-many association - one Job to many CodingProblems
 
-    private Company company;
-    private Person person;
+    @OneToMany(mappedBy = "job",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.EAGER)
+    private List<CodingProblem> codingProblems = new ArrayList<>();
+
+
+//    private Company company;
+//    private Person person;
 
     /**
      * Constructors
@@ -45,31 +46,24 @@ public class SWE extends GeneralJob{
         this.codingProblems = codingProblems != null ? codingProblems : new ArrayList<>();
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) { this.company = company; }
-
-    public Person getPerson() {
-        return person;
-    }
+//    public Company getCompany() {
+//        return company;
+//    }
+//
+//    public void setCompany(Company company) { this.company = company; }
+//
+//    public Person getPerson() {
+//        return person;
+//    }
 
 
     @Override
     public String toString() {
         return "SWE{" +
             "codingProblems=" + codingProblems +
-            ", company=" + company +
-            ", person=" + person +
+//            ", company=" + company +
+//            ", person=" + person +
             '}';
     }
-
-//    @Override
-//    public String displayDetailedInfo() {
-//        String baseInfo = super.displayDetailedInfo();
-//        String languageInfo = languages.isEmpty() ? "" : " | Languages: " + String.join(", ", languages);
-//        return baseInfo + languageInfo;
-//    }
 
 }

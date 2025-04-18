@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CodingProblemService {
-    boolean save(CodingProblem codingProblem);
+    CodingProblem save(CodingProblem codingProblem);
 
     boolean removeById(UUID id);
 

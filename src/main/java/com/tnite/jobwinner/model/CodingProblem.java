@@ -20,7 +20,7 @@ public class CodingProblem {
         name = "UUID",
         strategy = "org.hibernate.id.UUIDGenerator"
     )
-    private UUID id = UUID.randomUUID();; // Unique identifier
+    private UUID id; // Unique identifier
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", nullable = false)
@@ -55,7 +55,7 @@ public class CodingProblem {
         this.id = id;
     }
 
-    public GeneralJob getJob() {
+    public SWE getJob() {
         return this.job;
     }
 

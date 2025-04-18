@@ -24,14 +24,26 @@ public class CodingProblemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProblem);
     }
 
-    @GetMapping("/delete/{id}")
-    public boolean deleteCodingProblem(@PathVariable UUID id) {
-        return codingProblemService.removeById(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCodingProblem(@PathVariable UUID id) {
+        codingProblemService.removeById(id);
+        return ResponseEntity.noContent().build();
     }
 
-
-    @GetMapping("/list/jobId")
-    public List<CodingProblem> listByJobId(@RequestParam("jobId") UUID jobId) {
-        return codingProblemService.listByJobId(jobId);
+    @GetMapping
+    public ResponseEntity<List<CodingProblem>> listByJobId(@RequestParam("jobId") UUID jobId) {
+        List<CodingProblem> problems = codingProblemService.listByJobId(jobId);
+        return ResponseEntity.ok(problems);
     }
+
+//    @GetMapping("/delete/{id}")
+//    public boolean deleteCodingProblem(@PathVariable UUID id) {
+//        return codingProblemService.removeById(id);
+//    }
+//
+//
+//    @GetMapping("/list/jobId")
+//    public List<CodingProblem> listByJobId(@RequestParam("jobId") UUID jobId) {
+//        return codingProblemService.listByJobId(jobId);
+//    }
 }

@@ -1,5 +1,6 @@
 package com.tnite.jobwinner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
@@ -25,6 +26,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "jobs")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discriminator")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class Job{
 
     @Id
@@ -100,7 +102,7 @@ public abstract class Job{
     public String getLocation() {return this.location;}
     public LocalDate getApplicationDate() {return this.applicationDate;}
     public Company getCompany() {return this.company;}
-    public Person getHRInfo(){return this.person;}
+    public Person getPerson(){return this.person;}
     public double getSalary() {return this.salary;}
     public Status getJobStatus() {return this.jobStatus;}
     public Type getJobType() {return this.jobType;}

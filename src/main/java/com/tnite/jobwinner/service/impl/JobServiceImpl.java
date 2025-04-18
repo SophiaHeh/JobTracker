@@ -1,5 +1,6 @@
 package com.tnite.jobwinner.service.impl;
 
+import com.tnite.jobwinner.excpetion.ResourceNotFoundException;
 import com.tnite.jobwinner.model.Company;
 import com.tnite.jobwinner.model.GeneralJob;
 import com.tnite.jobwinner.repository.CompanyRepository;
@@ -9,7 +10,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.tnite.jobwinner.model.Job;
 import com.tnite.jobwinner.repository.JobRepository;
 import java.util.List;
 

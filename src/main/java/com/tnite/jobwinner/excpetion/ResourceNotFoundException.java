@@ -1,4 +1,4 @@
-package com.tnite.jobwinner.service.impl;
+package com.tnite.jobwinner.excpetion;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,5 +1,5 @@
 package com.tnite.jobwinner.model;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
@@ -16,6 +16,8 @@ import org.hibernate.annotations.GenericGenerator;
     name = "companies",
     uniqueConstraints = @UniqueConstraint(columnNames = "name")
 )
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Company {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -49,6 +51,8 @@ public class Company {
     public void setName(String name){this.name = name;}
 
     public String getIndustry(){return this.industry;}
+
+    public void setIndustry(String industry){this.industry = industry;}
 
     @Override
     public String toString(){

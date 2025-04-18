@@ -35,9 +35,7 @@ public class JobController {
     @PostMapping
     public ResponseEntity<GeneralJob> createJob(@RequestBody GeneralJob job) {
         GeneralJob saved = jobService.createJob(job);
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
 //    public ResponseEntity<String> createJob(@RequestBody GeneralJob job) {
