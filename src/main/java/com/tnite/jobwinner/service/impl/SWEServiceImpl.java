@@ -75,11 +75,10 @@ public class SWEServiceImpl implements SWEService {
 //    }
 
     @Override
-    @Transactional
     public SWE save(SWE swe) {
         // Check for duplicate SWE by jobTitle and company
         if (swe.getJobTitle() != null && swe.getCompany() != null) {
-            List<SWE> existingJobs = sweRepository.findByJobTitleAndCompanyName(
+            List<SWE> existingJobs = sweRepository.findByJobTitleAndCompany_Name(
                 swe.getJobTitle(), swe.getCompany().getName());
             if (!existingJobs.isEmpty()) {
                 throw new IllegalArgumentException("SWE job with title '" + swe.getJobTitle() +
@@ -94,25 +93,24 @@ public class SWEServiceImpl implements SWEService {
         }
 
 
+        // Deduplicate and normalize company
         String companyName = swe.getCompany().getName().trim().toLowerCase();
         Company company = companyRepository
             .findByNameIgnoreCase(companyName)
-            .orElseGet(() -> {
-                Company newCompany = new Company(swe.getCompany().getName(),
-                    swe.getCompany().getIndustry());
-                return companyRepository.save(newCompany);
-            });
+            .orElseGet(() -> companyRepository.save(new Company(
+                swe.getCompany().getName().trim(),
+                swe.getCompany().getIndustry()
+            )));
         swe.setCompany(company);
+
         if (swe.getPerson() != null) {
             // Normalize email
             String email = swe.getPerson().getEmail().trim().toLowerCase();
-            Person person = personRepository
-                .findByEmailIgnoreCase(email)
-                .orElseGet(() -> {
-                    swe.getPerson().setCompany(company);
-                    swe.getPerson().setEmail(email);
-                    return personRepository.save(swe.getPerson());
-                });
+            swe.getPerson().setEmail(email);
+            swe.getPerson().setCompany(company);
+
+            Person person = personRepository.findByEmailIgnoreCase(email)
+                .orElseGet(() -> personRepository.save(swe.getPerson()));
             swe.setPerson(person);
         }
 
@@ -124,6 +122,13 @@ public class SWEServiceImpl implements SWEService {
         return sweRepository.save(swe);
     }
 
+
+    @Override
+    public List<SWE> listAll() {
+        return sweRepository.findAll();
+    }
+
+
     /**
      * Retrieves a list of SWE objects from the database and filters them
      * based on properties in sweParam (e.g., jobType, jobTitle).
@@ -131,7 +136,7 @@ public class SWEServiceImpl implements SWEService {
      * @return
      */
     @Override
-    public List<SWE> list(SWE sweParam) {
+    public List<SWE> listFiltered(SWE sweParam) {
         List<SWE> filteredJobs = sweRepository.findAll(); // Get all SWE jobs from DB
         if (sweParam != null) {
             if (sweParam.getJobType() != null) {

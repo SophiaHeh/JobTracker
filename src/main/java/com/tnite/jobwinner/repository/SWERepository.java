@@ -6,5 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SWERepository extends JpaRepository<SWE, UUID> {
-    List<SWE> findByJobTitleAndCompanyName(String jobTitle, String companyName);
+    List<SWE> findByJobTitleAndCompany_Name(String jobTitle, String companyName);
+//    List<SWE> findAll();
+//    List<SWE> findById(UUID jobId);
 }

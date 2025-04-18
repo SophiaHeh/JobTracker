@@ -9,7 +9,10 @@ public interface SWEService {
     SWE save(SWE swe);
 
     // list all
-    List<SWE> list(SWE swe);
+    List<SWE> listAll();
+
+    // list filter
+    List<SWE> listFiltered(SWE swe);
 
     boolean removeById(UUID id);
 

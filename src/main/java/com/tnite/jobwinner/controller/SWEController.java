@@ -66,10 +66,15 @@ public class SWEController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdJob);
     }
 
+    @PostMapping("/filter")
+    public ResponseEntity<List<SWE>> listByConditions(@RequestBody SWE sweParam) {
+        List<SWE> jobs = sweService.listFiltered(sweParam);
+        return ResponseEntity.ok(jobs);
+    }
 
     @GetMapping
-    public ResponseEntity<List<SWE>> listAllJobs(SWE swe) {
-        List<SWE> jobs = sweService.list(swe);
+    public ResponseEntity<List<SWE>> listAll() {
+        List<SWE> jobs = sweService.listAll();
         return ResponseEntity.ok(jobs);
     }
 
@@ -83,11 +88,5 @@ public class SWEController {
     public ResponseEntity<Void> deleteJob(@PathVariable UUID id) {
         boolean deleted = sweService.removeById(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-    }
-
-    @PostMapping("/filter")
-    public ResponseEntity<List<SWE>> listByConditions(@RequestBody SWE sweParam) {
-        List<SWE> jobs = sweService.list(sweParam);
-        return ResponseEntity.ok(jobs);
     }
 }
